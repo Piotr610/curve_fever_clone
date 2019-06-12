@@ -1,5 +1,5 @@
 # Curve Fever (clone)
-OOP project
+OOP course project
 # Run
 ```sh
 $ py main.py
