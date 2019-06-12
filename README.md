@@ -1,4 +1,9 @@
 # Curve Fever (clone)
 Projekt na Programowanie Obiektowe
-# uruchomienie
-py main.py
+# Run
+```sh
+$ py main.py
+```
+# Requirements
+- Python 3
+- Pygame
