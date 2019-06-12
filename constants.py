@@ -1,0 +1,60 @@
+import pygame
+# Display
+# RES_WIDTH = 1920
+# RES_HEIGHT = 1080
+# SCALE = 0.6
+DISPLAY_WIDTH = 1000
+DISPLAY_HEIGHT = 1000
+FPS = 30
+MENU_FPS = 24
+BACKGROUND = 'data/background.jpg'
+
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 200, 0)
+BLUE = (0, 0, 255)
+LIGHT_RED = (255, 100, 100)
+LIGHT_GREEN = (100, 255, 100)
+LIGHT_BLUE = (100, 100, 255)
+GRAY = (200, 200, 200)
+YELLOW = (255, 255, 0)
+VIOLET = (200, 0, 200)
+AQUA = (0, 128, 128)
+
+# Strings and Fonts
+GAME_NAME = "Curve fever (clone)"
+GAME_NAME_COLOR = GREEN
+PRESS_KEY = "Press any key to continue"
+PRESS_KEY_COLOR = LIGHT_RED
+PLAY = "Play"
+ABOUT = "About"
+SETTINGS = "Settings"
+QUIT = "Quit"
+NUMBER_OF_PLAYERS = "Set number of players"
+NUMBER_FONT_SIZE = 180
+GAME_MODE = "Enable powerups"
+GAME_ABOUT = "Made by Piotr Łężny"
+GAME_ABOUT_COLOR = VIOLET
+INTRO_FONT_SIZE = 140
+BUTTON_FONT_SIZE = 40
+ABOUT_FONT_SIZE = 100
+PLAYER_CONTROLS = "Player controls:"
+PLAYER0_CONTROLS = "RED - left/right arrow"
+PLAYER1_CONTROLS = "GREEN - a/d"
+PLAYER2_CONTROLS = "BLUE - j/l "
+PLAYER3_CONTROLS = "YELLOW - num_4/num_6"
+PLAYER_CONTROLS_FONT_SIZE = 40
+
+# Game settings
+DEFAULT_SPEED = 5
+DEFAULT_TURN = 6
+POWERUP_SIZE = 20
+CIRCLE_SIZE = 4
+PLAYER0_COLOR = LIGHT_RED
+PLAYER1_COLOR = LIGHT_GREEN
+PLAYER0_KEYS = [pygame.K_LEFT, pygame.K_RIGHT]
+PLAYER1_KEYS = [pygame.K_a, pygame.K_d]
+PLAYER2_KEYS = [pygame.K_j, pygame.K_l]
+PLAYER3_KEYS = [pygame.K_KP4, pygame.K_KP6]
