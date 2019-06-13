@@ -1,11 +1,13 @@
-import math
 import random
+
+import math
 
 from constants import *
 from entity import Entity
 
 
 class Player(Entity):
+    """Class that handles players"""
     def __init__(self, color, surface, keys):
         self.__color = color
         self.pos_new = list((random.randint(50, (DISPLAY_WIDTH-100)),
@@ -95,6 +97,10 @@ class Player(Entity):
         Handles steering over the player and calculates movement.
         :param powerup: powerup to check if it was 'taken' by the player
         """
+        # W tej metodzie oraz metodzie __collision() cytuje kod ze strony:
+        # https://pl.python.org/forum/index.php?topic=4433.0;wap2
+        # Skorzystałem z niego by zrobić rysowanie śladu i 'powerup'a' i dostosowałem do potrzeb mojej gry.
+
         keys = pygame.key.get_pressed()
 
         if keys[self.keys[0]]:

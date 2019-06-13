@@ -1,5 +1,6 @@
 import pygame
 # Display
+
 # RES_WIDTH = 1920
 # RES_HEIGHT = 1080
 # SCALE = 0.6

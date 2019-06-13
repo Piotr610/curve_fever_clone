@@ -7,6 +7,7 @@ color = [BLUE, RED, GREEN, WHITE, YELLOW, VIOLET, AQUA]
 
 
 class PowerUp(Entity):
+    """Class that handles powerups"""
     def __init__(self, surface):
         self.point = (random.randint(50, (DISPLAY_WIDTH-50)), random.randint(50, (DISPLAY_HEIGHT-50)))
         self.type = random.randint(0, 6)

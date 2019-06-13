@@ -3,6 +3,7 @@ from player import Player
 
 
 class Game:
+    """Class that handles the game"""
     def __init__(self, menu, display, fever, settings, powerup):
         self.__menu = menu
         self.__display = display

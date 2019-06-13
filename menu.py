@@ -60,7 +60,7 @@ def message_display(text, surface, font_size, color, localization):
 
 
 class GameMenu:
-
+    """Class that handles game menu"""
     def __init__(self, game_display, settings):
         self.__gameDisplay = game_display
         self.__settings = settings

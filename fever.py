@@ -17,6 +17,7 @@ def message_display(text, surface, font_size, color):
 
 
 class Fever:
+    """Class that handles gameplay"""
     def __init__(self, surface, powerup, display):
         self.__surface = surface
         self.track = pygame.Surface(self.__surface.get_size())
