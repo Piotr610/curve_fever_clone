@@ -5,11 +5,28 @@ color = [BLUE, RED, GREEN, WHITE, YELLOW, VIOLET, AQUA]
 
 
 def text_objects(text, font, color):
+    """
+    Sets up text format and returns it
+    :param str text: text to format
+    :param font: Font
+    :param color: Color of text
+    """
     text_surface = font.render(text, True, color)
     return text_surface, text_surface.get_rect()
 
 
 def button(text, x, y, w, h, ic, ac, surface):
+    """
+    Creates button and returns False if clicked and True if not clicked
+    :param str text: text to display on the button
+    :param int x: x parameter of button's localization
+    :param int y: y parameter of button's localization
+    :param int w: width of the button
+    :param int h: height of the button
+    :param ic: inactive color of the button
+    :param ac: active color of the button
+    :param surface: surface for the button to be displayed on
+    """
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
@@ -28,6 +45,14 @@ def button(text, x, y, w, h, ic, ac, surface):
 
 
 def message_display(text, surface, font_size, color, localization):
+    """
+    Displays text on screen.
+    :param str text: text to display
+    :param surface: surface for the text to be displayed on
+    :param font_size: font size of the text
+    :param color: color of the text
+    :param localization: localization of the text
+    """
     large_text = pygame.font.Font(None, font_size)
     text_surf, text_rect = text_objects(text, large_text, color)
     text_rect.center = localization
@@ -41,6 +66,7 @@ class GameMenu:
         self.__settings = settings
 
     def game_intro(self):
+        """Game intro screen."""
         intro = True
         while intro:
             click = pygame.mouse.get_pressed()
@@ -60,6 +86,7 @@ class GameMenu:
             self.__gameDisplay.clock.tick(MENU_FPS)
 
     def game_menu(self):
+        """Game menu screen with buttons handling player actions."""
         not_playing = True
         about = False
         settings = False
@@ -75,8 +102,8 @@ class GameMenu:
                     pygame.quit()
                     quit()
             self.__gameDisplay.surface.blit(self.__gameDisplay.get_background(), [0, 0])
-            not_playing = button(PLAY, ((DISPLAY_WIDTH / 2) - 100),
-                   (DISPLAY_HEIGHT / 8), 200, 100, GREEN, LIGHT_GREEN, self.__gameDisplay.surface)
+            not_playing = button(PLAY, int((DISPLAY_WIDTH / 2) - 100),
+                   int(DISPLAY_HEIGHT / 8), 200, 100, GREEN, LIGHT_GREEN, self.__gameDisplay.surface)
             settings = not button(SETTINGS, ((DISPLAY_WIDTH / 2) - 100),
                    (DISPLAY_HEIGHT / 3), 200, 100, RED, LIGHT_RED, self.__gameDisplay.surface)
             about = not button(ABOUT, ((DISPLAY_WIDTH / 2) - 100),
@@ -87,6 +114,7 @@ class GameMenu:
             self.__gameDisplay.clock.tick(MENU_FPS)
 
     def game_about(self):
+        """Screen with name of author and instructions to the game."""
         about = True
         click = (0, 0, 0)
         while about:
@@ -145,6 +173,7 @@ class GameMenu:
             self.__gameDisplay.clock.tick(MENU_FPS)
 
     def game_settings(self):
+        """Screen with settings of the game."""
         settings = True
 
         while settings:
@@ -176,4 +205,4 @@ class GameMenu:
                             ((self.__gameDisplay.WIDTH / 1.3), ((self.__gameDisplay.HEIGHT / 1.7) + 75)))
 
             pygame.display.update()
-            self.__gameDisplay.clock.tick(14)
+            self.__gameDisplay.clock.tick(13)

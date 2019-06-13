@@ -12,6 +12,7 @@ class Game:
         self.__intro = True
 
     def __play(self):
+        """Creates player objects and sets up the game."""
         playing = True
         self.__fever.after_game_over = False
         self.__display.surface.fill(BLACK)
@@ -47,6 +48,7 @@ class Game:
             self.__display.clock.tick(FPS)
 
     def run(self):
+        """Starts intro and then handles the menu and gameplay."""
         if self.__intro:
             self.__menu.game_intro()
             self.__intro = False

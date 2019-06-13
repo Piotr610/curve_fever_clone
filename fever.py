@@ -1,12 +1,15 @@
 from constants import *
-
-
-def text_objects(text, font, color):
-    text_surface = font.render(text, True, color)
-    return text_surface, text_surface.get_rect()
+from menu import text_objects
 
 
 def message_display(text, surface, font_size, color):
+    """
+    Displays text in the middle of the screen
+    :param str text: text to display
+    :param surface: surface for the text to be displayed on
+    :param font_size: font size of the text
+    :param color: color of the text
+    """
     large_text = pygame.font.Font(None, font_size)
     text_surf, text_rect = text_objects(text, large_text, color)
     text_rect.center = ((DISPLAY_WIDTH/2), (DISPLAY_HEIGHT/2))
@@ -26,14 +29,23 @@ class Fever:
         self.__powerup_active = True
 
     def set_powerups(self, powerups):
+        """
+        Activates or deactivates powerups in game.
+        :param bool powerups: bool value to activate or deactivate powerups
+        """
         self.__powerup_active = powerups
 
     def set_players(self, players):
+        """
+        Sets players and sets "track" surface for them.
+        :param list players: list of players
+        """
         self.players = players
         for player in self.players:
             player.set_track(self.track)
 
     def __game_over(self):
+        """Handles game over event and displays who's the winner."""
         self.game_over_screen = True
         click = (0, 0, 0)
         if len(self.players) == 2:
@@ -87,6 +99,7 @@ class Fever:
             self.after_game_over = True
 
     def play(self):
+        """Handles the gameplay."""
         i = 0
 
         for player in self.players:

@@ -14,4 +14,5 @@ class Display:
         self.__background = pygame.transform.scale(self.__background, [DISPLAY_WIDTH, DISPLAY_HEIGHT])
 
     def get_background(self):
+        """Returns background."""
         return self.__background

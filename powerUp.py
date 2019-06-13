@@ -16,6 +16,10 @@ class PowerUp(Entity):
         self.players = None
 
     def do_sth(self, p):
+        """
+        Does something after being 'taken'.
+        :param Player p: player who has 'taken' the powerup
+        """
         if self.type == 0:
             self.__track.fill(BLACK)
 
@@ -56,21 +60,29 @@ class PowerUp(Entity):
                     player.wall = False
 
     def set_track(self, track):
+        """
+        Sets 'track' surface.
+        :param track: surface with track drawn on it
+        """
         self.__track = track
 
     def set_players(self, players):
+        """
+        Sets players.
+        :param list players: list of players
+        """
         self.players = players
 
-    # def set_activity(self, active):
-    #     self.active = active
-
     def __generate_type_and_color(self):
+        """Generates powerup's type and color"""
         self.type = random.randint(0, 6)
         self.color = color[self.type]
 
     def reset(self):
+        """Resets powerup"""
         self.__generate_type_and_color()
         self.point = (random.randint(50, (DISPLAY_WIDTH - 50)), random.randint(50, (DISPLAY_HEIGHT - 50)))
 
     def draw(self):
+        """Draws powerup"""
         pygame.draw.circle(self.surface, self.color, self.point, POWERUP_SIZE)
