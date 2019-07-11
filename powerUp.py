@@ -22,7 +22,7 @@ class PowerUp(Entity):
 
     async def do_sth_async(self, p, time, type):
         self.do_sth_helper(p, type)
-        await asyncio.sleep(time/1000)
+        await asyncio.sleep(time)
         self.undo_sth(type, p)
 
     def do_sth_helper(self, p, type):

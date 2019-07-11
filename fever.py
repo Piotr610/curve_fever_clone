@@ -1,5 +1,9 @@
+import asyncio
+
+import game
 from constants import *
 from menu import text_objects
+from powerUp import PowerUp
 
 
 def message_display(text, surface, font_size, color):
@@ -18,23 +22,24 @@ def message_display(text, surface, font_size, color):
 
 class Fever:
     """Class that handles gameplay"""
-    def __init__(self, surface, powerup, display):
+    def __init__(self, surface, display, settings):
         self.__surface = surface
         self.track = pygame.Surface(self.__surface.get_size())
         self.__game_over_values = list((False, False, False, False))
-        self.powerup = powerup
+        self.powerup = None
         self.players = None
         self.after_game_over = False
         self.game_over_screen = True
         self.display = display
-        self.__powerup_active = True
+        self.settings = settings
+        # self.__powerup_active = True
 
-    def set_powerups(self, powerups):
-        """
-        Activates or deactivates powerups in game.
-        :param bool powerups: bool value to activate or deactivate powerups
-        """
-        self.__powerup_active = powerups
+    # def set_powerups(self, powerups):
+    #     """
+    #     Activates or deactivates powerups in game.
+    #     :param bool powerups: bool value to activate or deactivate powerups
+    #     """
+    #     self.__powerup_active = powerups
 
     def set_players(self, players):
         """
@@ -97,10 +102,19 @@ class Fever:
                 player.reset()
             self.__game_over_values = list((False, False, False, False))
             self.track.fill(BLACK)
+            self.powerup.clear()
             self.after_game_over = True
 
     def spawn_powerup(self):
-        pass
+        asyncio.run(self.spawn_powerup_async())
+
+    async def spawn_powerup_async(self):
+        while not game.stop_threads and self.settings.get_mode():
+            await asyncio.sleep(8)
+            powerup = PowerUp(self.__surface)
+            powerup.set_players(self.players)
+            powerup.set_track(self.track)
+            self.powerup.append(powerup)
 
     def play(self):
         """Handles gameplay."""
@@ -121,5 +135,5 @@ class Fever:
         for player in self.players:
             pygame.draw.circle(player.surface, player.get_color(), player.pos_new, int(player.size))
 
-        if self.__powerup_active:
-            self.powerup.draw()
+        for powerup in self.powerup:
+            powerup.draw()

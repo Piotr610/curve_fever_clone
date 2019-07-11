@@ -74,7 +74,7 @@ class Player(Entity):
 
         self.surface.blit(self.__track, (0, 0))
 
-    def __collision(self, sum_dx, sum_dy, powerup):
+    def __collision(self, sum_dx, sum_dy, powerups):
         """Handles collisions and checks if the player has lost."""
         if 0 <= (self.pos_new[0] + int(sum_dx)) < DISPLAY_WIDTH and \
                 0 <= (self.pos_new[1] + int(sum_dy)) < DISPLAY_HEIGHT:
@@ -85,11 +85,11 @@ class Player(Entity):
                 print("sum_dx,sum_dy:", int(sum_dx), int(sum_dy))
                 self.speed = 0
                 self.game_over = True
-
-            if abs(powerup.point[0] - self.pos_new[0] - int(sum_dx)) < (POWERUP_SIZE + self.size) and \
-                    abs(powerup.point[1] - self.pos_new[1] - int(sum_dy)) < (POWERUP_SIZE + self.size):
-                Thread(target=powerup.do_sth, args=(self, POWERUP_COOLDOWN*1000, powerup.type)).start()
-                powerup.reset()
+            for powerup in powerups:
+                if abs(powerup.point[0] - self.pos_new[0] - int(sum_dx)) < (POWERUP_SIZE + self.size) and \
+                        abs(powerup.point[1] - self.pos_new[1] - int(sum_dy)) < (POWERUP_SIZE + self.size):
+                    Thread(target=powerup.do_sth, args=(self, POWERUP_COOLDOWN, powerup.type)).start()
+                    powerup.reset()
 
         elif (0 > (self.pos_new[0] + int(sum_dx)) or (self.pos_new[0] + int(sum_dx)) >= DISPLAY_WIDTH) and self.wall:
             self.pos_new[0] -= DISPLAY_WIDTH

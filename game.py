@@ -1,22 +1,28 @@
+from threading import Thread
+
 from constants import *
 from player import Player
+from powerUp import PowerUp
 
 stop_threads = False
 
 
 class Game:
     """Class that handles game"""
-    def __init__(self, menu, display, fever, settings, powerup):
+    def __init__(self, menu, display, fever, settings):
         self.__menu = menu
         self.__display = display
         self.__fever = fever
         self.__settings = settings
-        self.__powerup = powerup
+        self.__powerup = [PowerUp(self.__display.surface)]
         self.__intro = True
+        self.__fever.powerup = self.__powerup
 
     def __play(self):
         """Creates player objects and sets up game."""
         playing = True
+        global stop_threads
+        stop_threads = False
         self.__fever.after_game_over = False
         self.__display.surface.fill(BLACK)
 
@@ -32,9 +38,17 @@ class Game:
         else:
             players = [player0, player1]
 
-        self.__powerup.set_players(players)
+        if not self.__settings.get_mode():
+            self.__powerup.clear()
+
+        for powerup in self.__powerup:
+            powerup.set_players(players)
+            powerup.set_track(self.__fever.track)
         self.__fever.set_players(players)
-        self.__fever.set_powerups(self.__settings.get_mode())
+        # self.__fever.set_powerups(self.__settings.get_mode())
+
+        if self.__settings.get_mode():
+            Thread(target=self.__fever.spawn_powerup).start()
 
         # Game loop
         while playing and not self.__fever.after_game_over:
@@ -42,7 +56,6 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    global stop_threads
                     stop_threads = True
                     pygame.quit()
                     quit()
