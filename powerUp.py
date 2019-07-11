@@ -1,5 +1,6 @@
 import random
 
+import game
 from constants import *
 from entity import Entity
 
@@ -16,49 +17,83 @@ class PowerUp(Entity):
         self.__track = None
         self.players = None
 
-    def do_sth(self, p):
+    def do_sth(self, p, time, type):
+        self.do_sth_helper(p, type)
+        t = pygame.time.get_ticks()
+        while pygame.time.get_ticks() - time <= t:
+            if game.stop_threads:
+                return
+
+        self.undo_sth(type, p)
+
+    def do_sth_helper(self, p, type):
         """
         Does something after being 'taken'.
         :param Player p: player who has 'taken' the powerup
         """
-        if self.type == 0:
+
+        if type == 0:
             self.__track.fill(BLACK)
 
-        elif self.type == 1:
+        elif type == 1:
             for player in self.players:
                 if player is not p:
                     player.set_speed((player.get_speed() + 5))
 
-        elif self.type == 2:
+        elif type == 2:
             for player in self.players:
                 if player is not p:
                     player.set_turn((player.get_turn() / 1.8))
 
-        elif self.type == 3:
+        elif type == 3:
             p.ghost = True
-            for player in self.players:
-                if player is not p:
-                    player.ghost = False
 
-        elif self.type == 4:
+        elif type == 4:
             for player in self.players:
                 if player is not p:
                     if player.size < 15:
                         player.size *= 1.7
 
-        elif self.type == 5:
-            if p.keys_reversed:
-                p.keys.reverse()
-                p.keys_reversed = False
+        elif type == 5:
             for player in self.players:
                 if player is not p:
                     player.keys.reverse()
                     player.keys_reversed = not player.keys_reversed
 
-        elif self.type == 6:
+        elif type == 6:
             for player in self.players:
                 if player is not p:
                     player.wall = False
+
+    def undo_sth(self, type, p):
+        if type == 1:
+            for player in self.players:
+                if player is not p:
+                    player.set_speed((player.get_speed() - 5))
+
+        elif type == 2:
+            for player in self.players:
+                if player is not p:
+                    player.set_turn((player.get_turn() * 1.8))
+
+        elif type == 3:
+            p.ghost = False
+
+        elif type == 4:
+            for player in self.players:
+                if player is not p:
+                    player.size /= 1.7
+
+        elif type == 5:
+            for player in self.players:
+                if player is not p:
+                    player.keys.reverse()
+                    player.keys_reversed = not player.keys_reversed
+
+        elif type == 6:
+            for player in self.players:
+                if player is not p:
+                    player.wall = True
 
     def set_track(self, track):
         """

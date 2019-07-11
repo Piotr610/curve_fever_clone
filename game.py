@@ -1,6 +1,8 @@
 from constants import *
 from player import Player
 
+stop_threads = False
+
 
 class Game:
     """Class that handles the game"""
@@ -37,16 +39,22 @@ class Game:
         # Game loop
         while playing and not self.__fever.after_game_over:
             self.__fever.after_game_over = False
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    global stop_threads
+                    stop_threads = True
                     pygame.quit()
                     quit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         playing = False
+
             self.__fever.play()
             pygame.display.update()
             self.__display.clock.tick(FPS)
+
+        stop_threads = True
 
     def run(self):
         """Starts intro and then handles the menu and gameplay."""
