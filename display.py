@@ -3,7 +3,7 @@ from constants import *
 
 # Display Window
 class Display:
-    """Class that handles the display"""
+    """Class that handles display"""
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(GAME_NAME)

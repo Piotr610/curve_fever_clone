@@ -99,8 +99,11 @@ class Fever:
             self.track.fill(BLACK)
             self.after_game_over = True
 
+    def spawn_powerup(self):
+        pass
+
     def play(self):
-        """Handles the gameplay."""
+        """Handles gameplay."""
         i = 0
 
         for player in self.players:

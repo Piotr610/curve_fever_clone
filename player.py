@@ -55,18 +55,13 @@ class Player(Entity):
         """Returns turn which the player is able to do."""
         return self.__turn
 
-    async def imitate_gaps(self):
+    async def make_gaps(self):
         self.gap = True
-        # start = pygame.time.get_ticks()
-        # while pygame.time.get_ticks() - start <= 200:
-        #     if game.stop_threads:
-        #         return
         await asyncio.sleep(0.2)
-
         self.gap = False
 
     def handle_gaps(self):
-        asyncio.run(self.imitate_gaps())
+        asyncio.run(self.make_gaps())
 
     def draw(self):
         """Draws a track of the player, drawing a line between its old and new position."""

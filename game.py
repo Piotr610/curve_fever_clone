@@ -5,7 +5,7 @@ stop_threads = False
 
 
 class Game:
-    """Class that handles the game"""
+    """Class that handles game"""
     def __init__(self, menu, display, fever, settings, powerup):
         self.__menu = menu
         self.__display = display
@@ -15,7 +15,7 @@ class Game:
         self.__intro = True
 
     def __play(self):
-        """Creates player objects and sets up the game."""
+        """Creates player objects and sets up game."""
         playing = True
         self.__fever.after_game_over = False
         self.__display.surface.fill(BLACK)
@@ -57,7 +57,7 @@ class Game:
         stop_threads = True
 
     def run(self):
-        """Starts intro and then handles the menu and gameplay."""
+        """Starts intro and then handles menu and gameplay."""
         if self.__intro:
             self.__menu.game_intro()
             self.__intro = False
