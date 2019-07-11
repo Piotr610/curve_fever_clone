@@ -1,3 +1,4 @@
+import asyncio
 import random
 from threading import Thread
 
@@ -25,6 +26,7 @@ class Player(Entity):
         self.size = CIRCLE_SIZE
         self.keys_reversed = False
         self.wall = True
+        self.gap = False
 
     def get_color(self):
         """Returns color of the player."""
@@ -53,11 +55,27 @@ class Player(Entity):
         """Returns turn which the player is able to do."""
         return self.__turn
 
+    async def imitate_gaps(self):
+        self.gap = True
+        # start = pygame.time.get_ticks()
+        # while pygame.time.get_ticks() - start <= 200:
+        #     if game.stop_threads:
+        #         return
+        await asyncio.sleep(0.2)
+
+        self.gap = False
+
+    def handle_gaps(self):
+        asyncio.run(self.imitate_gaps())
+
     def draw(self):
         """Draws a track of the player, drawing a line between its old and new position."""
-        if self.pos_new != self.pos_old and not self.ghost:
+        if self.pos_new != self.pos_old and not self.ghost and not self.gap:
             pygame.draw.line(self.__track, self.__color, self.pos_new, self.pos_old, int(self.size*2.2))
         self.pos_old = self.pos_new[:]
+
+        if not random.randint(0, 30):
+            Thread(target=self.handle_gaps).start()
 
         self.surface.blit(self.__track, (0, 0))
 
@@ -68,15 +86,14 @@ class Player(Entity):
 
             color = self.__track.get_at((self.pos_new[0] + int(sum_dx), self.pos_new[1] + int(sum_dy)))
 
-            if color != BLACK and not self.ghost:
+            if color != BLACK and not self.ghost and not self.gap:
                 print("sum_dx,sum_dy:", int(sum_dx), int(sum_dy))
                 self.speed = 0
                 self.game_over = True
 
             if abs(powerup.point[0] - self.pos_new[0] - int(sum_dx)) < (POWERUP_SIZE + self.size) and \
                     abs(powerup.point[1] - self.pos_new[1] - int(sum_dy)) < (POWERUP_SIZE + self.size):
-                t = Thread(target=powerup.do_sth, args=(self, POWERUP_COOLDOWN*1000, powerup.type))
-                t.start()
+                Thread(target=powerup.do_sth, args=(self, POWERUP_COOLDOWN*1000, powerup.type)).start()
                 powerup.reset()
 
         elif (0 > (self.pos_new[0] + int(sum_dx)) or (self.pos_new[0] + int(sum_dx)) >= DISPLAY_WIDTH) and self.wall:
@@ -142,6 +159,7 @@ class Player(Entity):
             self.keys.reverse()
             self.keys_reversed = False
         self.ghost = False
+        self.gap = False
         self.size = CIRCLE_SIZE
         self.__turn = DEFAULT_TURN
         self.__angle = random.randint(0, 359)

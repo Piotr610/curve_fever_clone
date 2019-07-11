@@ -1,6 +1,6 @@
+import asyncio
 import random
 
-import game
 from constants import *
 from entity import Entity
 
@@ -18,11 +18,15 @@ class PowerUp(Entity):
         self.players = None
 
     def do_sth(self, p, time, type):
+        asyncio.run(self.do_sth_async(p, time, type))
+
+    async def do_sth_async(self, p, time, type):
         self.do_sth_helper(p, type)
-        t = pygame.time.get_ticks()
-        while pygame.time.get_ticks() - time <= t:
-            if game.stop_threads:
-                return
+        # t = pygame.time.get_ticks()
+        # while pygame.time.get_ticks() - time <= t:
+        #     if game.stop_threads:
+        #         return
+        await asyncio.sleep(time/1000)
 
         self.undo_sth(type, p)
 
