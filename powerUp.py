@@ -37,7 +37,7 @@ class PowerUp(Entity):
         elif type == 1:
             for player in self.players:
                 if player is not p:
-                    player.set_speed((player.get_speed() + 5))
+                    player.set_speed((player.get_speed() + DEFAULT_SPEED))
 
         elif type == 2:
             for player in self.players:
@@ -68,7 +68,7 @@ class PowerUp(Entity):
         if type == 1:
             for player in self.players:
                 if player is not p:
-                    player.set_speed((player.get_speed() - 5))
+                    player.set_speed((player.get_speed() - DEFAULT_SPEED))
 
         elif type == 2:
             for player in self.players:

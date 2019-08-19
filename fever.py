@@ -34,13 +34,6 @@ class Fever:
         self.settings = settings
         # self.__powerup_active = True
 
-    # def set_powerups(self, powerups):
-    #     """
-    #     Activates or deactivates powerups in game.
-    #     :param bool powerups: bool value to activate or deactivate powerups
-    #     """
-    #     self.__powerup_active = powerups
-
     def set_players(self, players):
         """
         Sets players and sets "track" surface for them.
@@ -71,13 +64,16 @@ class Fever:
                     if click[0] == 1 or click[2] == 1:
                         self.game_over_screen = False
                     if event.type == pygame.QUIT:
+                        game.stop_threads = True
                         pygame.quit()
                         quit()
+
                 if len(self.players) == 2:
                     if self.__game_over_values[1]:
                         message_display("Player red won", self.__surface, ABOUT_FONT_SIZE, RED)
                     elif self.__game_over_values[0]:
                         message_display("Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN)
+
                 elif len(self.players) == 3:
                     if self.__game_over_values[0] and self.__game_over_values[1]:
                         message_display("Player blue won", self.__surface, ABOUT_FONT_SIZE, BLUE)
@@ -85,6 +81,7 @@ class Fever:
                         message_display("Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN)
                     elif self.__game_over_values[1] and self.__game_over_values[2]:
                         message_display("Player red won", self.__surface, ABOUT_FONT_SIZE, RED)
+
                 elif len(self.players) == 4:
                     if self.__game_over_values[0] and self.__game_over_values[1] and self.__game_over_values[3]:
                         message_display("Player blue won", self.__surface, ABOUT_FONT_SIZE, BLUE)
@@ -94,12 +91,14 @@ class Fever:
                         message_display("Player red won", self.__surface, ABOUT_FONT_SIZE, RED)
                     elif self.__game_over_values[0] and self.__game_over_values[1] and self.__game_over_values[2]:
                         message_display("Player yellow won", self.__surface, ABOUT_FONT_SIZE, YELLOW)
+
                 click = pygame.mouse.get_pressed()
                 pygame.display.update()
                 self.display.clock.tick(MENU_FPS)
 
             for player in self.players:
                 player.reset()
+
             self.__game_over_values = list((False, False, False, False))
             self.track.fill(BLACK)
             self.powerup.clear()
