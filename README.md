@@ -2,7 +2,7 @@
 OOP course project
 # Run
 ```sh
-$ py main.py
+$ python main.py
 ```
 # Requirements
 - Python 3
