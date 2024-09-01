@@ -1,7 +1,19 @@
 import asyncio
 
+import pygame
+
 import game
-from constants import *
+from constants import (
+    ABOUT_FONT_SIZE,
+    BLACK,
+    BLUE,
+    DISPLAY_HEIGHT,
+    DISPLAY_WIDTH,
+    GREEN,
+    MENU_FPS,
+    RED,
+    YELLOW,
+)
 from menu import text_objects
 from powerUp import PowerUp
 
@@ -16,12 +28,13 @@ def message_display(text, surface, font_size, color):
     """
     large_text = pygame.font.Font(None, font_size)
     text_surf, text_rect = text_objects(text, large_text, color)
-    text_rect.center = ((DISPLAY_WIDTH/2), (DISPLAY_HEIGHT/2))
+    text_rect.center = ((DISPLAY_WIDTH / 2), (DISPLAY_HEIGHT / 2))
     surface.blit(text_surf, text_rect)
 
 
 class Fever:
     """Class that handles gameplay"""
+
     def __init__(self, surface, display, settings):
         self.__surface = surface
         self.track = pygame.Surface(self.__surface.get_size())
@@ -52,10 +65,20 @@ class Fever:
             self.__game_over_values[3] = True
         elif len(self.players) == 3:
             self.__game_over_values[3] = True
-        if self.__game_over_values[0] and self.__game_over_values[1] and self.__game_over_values[2] or\
-                self.__game_over_values[0] and self.__game_over_values[2] and self.__game_over_values[3] or\
-                self.__game_over_values[1] and self.__game_over_values[2] and self.__game_over_values[3] or\
-                self.__game_over_values[0] and self.__game_over_values[1] and self.__game_over_values[3]:
+        if (
+            self.__game_over_values[0]
+            and self.__game_over_values[1]
+            and self.__game_over_values[2]
+            or self.__game_over_values[0]
+            and self.__game_over_values[2]
+            and self.__game_over_values[3]
+            or self.__game_over_values[1]
+            and self.__game_over_values[2]
+            and self.__game_over_values[3]
+            or self.__game_over_values[0]
+            and self.__game_over_values[1]
+            and self.__game_over_values[3]
+        ):
             while self.game_over_screen:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
@@ -70,27 +93,61 @@ class Fever:
 
                 if len(self.players) == 2:
                     if self.__game_over_values[1]:
-                        message_display("Player red won", self.__surface, ABOUT_FONT_SIZE, RED)
+                        message_display(
+                            "Player red won", self.__surface, ABOUT_FONT_SIZE, RED
+                        )
                     elif self.__game_over_values[0]:
-                        message_display("Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN)
+                        message_display(
+                            "Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN
+                        )
 
                 elif len(self.players) == 3:
                     if self.__game_over_values[0] and self.__game_over_values[1]:
-                        message_display("Player blue won", self.__surface, ABOUT_FONT_SIZE, BLUE)
+                        message_display(
+                            "Player blue won", self.__surface, ABOUT_FONT_SIZE, BLUE
+                        )
                     elif self.__game_over_values[0] and self.__game_over_values[2]:
-                        message_display("Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN)
+                        message_display(
+                            "Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN
+                        )
                     elif self.__game_over_values[1] and self.__game_over_values[2]:
-                        message_display("Player red won", self.__surface, ABOUT_FONT_SIZE, RED)
+                        message_display(
+                            "Player red won", self.__surface, ABOUT_FONT_SIZE, RED
+                        )
 
                 elif len(self.players) == 4:
-                    if self.__game_over_values[0] and self.__game_over_values[1] and self.__game_over_values[3]:
-                        message_display("Player blue won", self.__surface, ABOUT_FONT_SIZE, BLUE)
-                    elif self.__game_over_values[0] and self.__game_over_values[2] and self.__game_over_values[3]:
-                        message_display("Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN)
-                    elif self.__game_over_values[1] and self.__game_over_values[2] and self.__game_over_values[3]:
-                        message_display("Player red won", self.__surface, ABOUT_FONT_SIZE, RED)
-                    elif self.__game_over_values[0] and self.__game_over_values[1] and self.__game_over_values[2]:
-                        message_display("Player yellow won", self.__surface, ABOUT_FONT_SIZE, YELLOW)
+                    if (
+                        self.__game_over_values[0]
+                        and self.__game_over_values[1]
+                        and self.__game_over_values[3]
+                    ):
+                        message_display(
+                            "Player blue won", self.__surface, ABOUT_FONT_SIZE, BLUE
+                        )
+                    elif (
+                        self.__game_over_values[0]
+                        and self.__game_over_values[2]
+                        and self.__game_over_values[3]
+                    ):
+                        message_display(
+                            "Player green won", self.__surface, ABOUT_FONT_SIZE, GREEN
+                        )
+                    elif (
+                        self.__game_over_values[1]
+                        and self.__game_over_values[2]
+                        and self.__game_over_values[3]
+                    ):
+                        message_display(
+                            "Player red won", self.__surface, ABOUT_FONT_SIZE, RED
+                        )
+                    elif (
+                        self.__game_over_values[0]
+                        and self.__game_over_values[1]
+                        and self.__game_over_values[2]
+                    ):
+                        message_display(
+                            "Player yellow won", self.__surface, ABOUT_FONT_SIZE, YELLOW
+                        )
 
                 click = pygame.mouse.get_pressed()
                 pygame.display.update()
@@ -124,15 +181,21 @@ class Fever:
                 self.__game_over_values[i] = player.steer(self.powerup)
             i += 1
 
-        if self.__game_over_values[0] or self.__game_over_values[1] or\
-                self.__game_over_values[2] or self.__game_over_values[3]:
+        if (
+            self.__game_over_values[0]
+            or self.__game_over_values[1]
+            or self.__game_over_values[2]
+            or self.__game_over_values[3]
+        ):
             self.__game_over()
 
         for player in self.players:
             player.draw()
 
         for player in self.players:
-            pygame.draw.circle(player.surface, player.get_color(), player.pos_new, int(player.size))
+            pygame.draw.circle(
+                player.surface, player.get_color(), player.pos_new, int(player.size)
+            )
 
         for powerup in self.powerup:
             powerup.draw()

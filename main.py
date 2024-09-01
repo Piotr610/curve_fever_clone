@@ -1,9 +1,10 @@
-from constants import *
 from display import Display
 from fever import Fever
 from game import Game
 from menu import GameMenu
 from settings import Settings
+
+import pygame
 
 # Set up
 myDisplay = Display()
@@ -25,5 +26,3 @@ while running:
 # Quit the game
 pygame.quit()
 quit()
-
-

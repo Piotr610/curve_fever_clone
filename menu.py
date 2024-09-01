@@ -1,4 +1,44 @@
-from constants import *
+import pygame
+from constants import (
+    ABOUT,
+    ABOUT_FONT_SIZE,
+    BLUE,
+    DISPLAY_HEIGHT,
+    DISPLAY_WIDTH,
+    GAME_ABOUT,
+    GAME_ABOUT_COLOR,
+    GAME_MODE,
+    GAME_NAME,
+    GAME_NAME_COLOR,
+    GRAY,
+    INTRO_FONT_SIZE,
+    LIGHT_BLUE,
+    LIGHT_GREEN,
+    LIGHT_RED,
+    MENU_FPS,
+    NUMBER_FONT_SIZE,
+    NUMBER_OF_PLAYERS,
+    PLAY,
+    PLAYER0_CONTROLS,
+    PLAYER1_CONTROLS,
+    PLAYER2_CONTROLS,
+    PLAYER3_CONTROLS,
+    PLAYER_CONTROLS,
+    PLAYER_CONTROLS_FONT_SIZE,
+    POWERUP_SIZE,
+    PRESS_KEY,
+    PRESS_KEY_COLOR,
+    QUIT,
+    RED,
+    GREEN,
+    SETTINGS,
+    WHITE,
+    YELLOW,
+    VIOLET,
+    AQUA,
+    BUTTON_FONT_SIZE,
+    BLACK,
+)
 
 
 color = [BLUE, RED, GREEN, WHITE, YELLOW, VIOLET, AQUA]
@@ -30,7 +70,7 @@ def button(text, x, y, w, h, ic, ac, surface):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
-    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+    if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(surface, ac, (x, y, w, h))
         if click[0] == 1:
             return False
@@ -39,7 +79,7 @@ def button(text, x, y, w, h, ic, ac, surface):
 
     small_text = pygame.font.Font(None, BUTTON_FONT_SIZE)
     text_surf, text_rect = text_objects(text, small_text, BLACK)
-    text_rect.center = ((x+(w/2)), (y+(h/2)))
+    text_rect.center = ((x + (w / 2)), (y + (h / 2)))
     surface.blit(text_surf, text_rect)
     return True
 
@@ -61,6 +101,7 @@ def message_display(text, surface, font_size, color, localization):
 
 class GameMenu:
     """Class that handles game menu"""
+
     def __init__(self, game_display, settings):
         self.__gameDisplay = game_display
         self.__settings = settings
@@ -78,10 +119,20 @@ class GameMenu:
                     quit()
 
             self.__gameDisplay.surface.blit(self.__gameDisplay.get_background(), [0, 0])
-            message_display(GAME_NAME, self.__gameDisplay.surface, INTRO_FONT_SIZE, GAME_NAME_COLOR,
-                            ((self.__gameDisplay.WIDTH / 2), (self.__gameDisplay.HEIGHT / 6)))
-            message_display(PRESS_KEY, self.__gameDisplay.surface, int(INTRO_FONT_SIZE/2), PRESS_KEY_COLOR,
-                            ((self.__gameDisplay.WIDTH / 2), (self.__gameDisplay.HEIGHT / 1.3)))
+            message_display(
+                GAME_NAME,
+                self.__gameDisplay.surface,
+                INTRO_FONT_SIZE,
+                GAME_NAME_COLOR,
+                ((self.__gameDisplay.WIDTH / 2), (self.__gameDisplay.HEIGHT / 6)),
+            )
+            message_display(
+                PRESS_KEY,
+                self.__gameDisplay.surface,
+                int(INTRO_FONT_SIZE / 2),
+                PRESS_KEY_COLOR,
+                ((self.__gameDisplay.WIDTH / 2), (self.__gameDisplay.HEIGHT / 1.3)),
+            )
             pygame.display.update()
             self.__gameDisplay.clock.tick(MENU_FPS)
 
@@ -102,14 +153,46 @@ class GameMenu:
                     pygame.quit()
                     quit()
             self.__gameDisplay.surface.blit(self.__gameDisplay.get_background(), [0, 0])
-            not_playing = button(PLAY, int((DISPLAY_WIDTH / 2) - 100),
-                   int(DISPLAY_HEIGHT / 8), 200, 100, GREEN, LIGHT_GREEN, self.__gameDisplay.surface)
-            settings = not button(SETTINGS, ((DISPLAY_WIDTH / 2) - 100),
-                   (DISPLAY_HEIGHT / 3), 200, 100, RED, LIGHT_RED, self.__gameDisplay.surface)
-            about = not button(ABOUT, ((DISPLAY_WIDTH / 2) - 100),
-                   (DISPLAY_HEIGHT / 2), 200, 100, BLUE, LIGHT_BLUE, self.__gameDisplay.surface)
-            quit_st = not button(QUIT, ((DISPLAY_WIDTH / 2) - 100),
-                   (DISPLAY_HEIGHT / 1.5), 200, 100, WHITE, GRAY, self.__gameDisplay.surface)
+            not_playing = button(
+                PLAY,
+                int((DISPLAY_WIDTH / 2) - 100),
+                int(DISPLAY_HEIGHT / 8),
+                200,
+                100,
+                GREEN,
+                LIGHT_GREEN,
+                self.__gameDisplay.surface,
+            )
+            settings = not button(
+                SETTINGS,
+                ((DISPLAY_WIDTH / 2) - 100),
+                (DISPLAY_HEIGHT / 3),
+                200,
+                100,
+                RED,
+                LIGHT_RED,
+                self.__gameDisplay.surface,
+            )
+            about = not button(
+                ABOUT,
+                ((DISPLAY_WIDTH / 2) - 100),
+                (DISPLAY_HEIGHT / 2),
+                200,
+                100,
+                BLUE,
+                LIGHT_BLUE,
+                self.__gameDisplay.surface,
+            )
+            quit_st = not button(
+                QUIT,
+                ((DISPLAY_WIDTH / 2) - 100),
+                (DISPLAY_HEIGHT / 1.5),
+                200,
+                100,
+                WHITE,
+                GRAY,
+                self.__gameDisplay.surface,
+            )
             pygame.display.update()
             self.__gameDisplay.clock.tick(MENU_FPS)
 
@@ -129,46 +212,139 @@ class GameMenu:
                     quit()
                 click = pygame.mouse.get_pressed()
             self.__gameDisplay.surface.fill(BLACK)
-            message_display(GAME_ABOUT, self.__gameDisplay.surface, ABOUT_FONT_SIZE,
-                            GAME_ABOUT_COLOR, ((DISPLAY_WIDTH/2), (DISPLAY_HEIGHT/8)))
-            message_display(PLAYER_CONTROLS, self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE+20,
-                            AQUA, ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8) + 130)))
-            message_display(PLAYER0_CONTROLS, self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            RED, ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8)+200)))
-            message_display(PLAYER1_CONTROLS, self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            GREEN, ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8)+250)))
-            message_display(PLAYER2_CONTROLS, self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            BLUE, ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8)+300)))
-            message_display(PLAYER3_CONTROLS, self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            YELLOW, ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8)+350)))
-            message_display(" - Clears map", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[0], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 150)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[0], (int((DISPLAY_WIDTH / 1.35)-220),
-                                                                int((DISPLAY_HEIGHT / 8) + 150)), POWERUP_SIZE)
-            message_display(" - Speeds up enemies", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[1], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 200)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[1], (int((DISPLAY_WIDTH / 1.35) - 220),
-                                                                int((DISPLAY_HEIGHT / 8) + 200)), POWERUP_SIZE)
-            message_display(" - Makes enemies' turn bigger", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[2], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 250)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[2], (int((DISPLAY_WIDTH / 1.35) - 220),
-                                                                int((DISPLAY_HEIGHT / 8) + 250)), POWERUP_SIZE)
-            message_display(" - Ghost mode", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[3], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 300)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[3], (int((DISPLAY_WIDTH / 1.35) - 220),
-                                                                int((DISPLAY_HEIGHT / 8) + 300)), POWERUP_SIZE)
-            message_display(" - Makes enemies bigger", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[4], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 350)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[4], (int((DISPLAY_WIDTH / 1.35) - 220),
-                                                                int((DISPLAY_HEIGHT / 8) + 350)), POWERUP_SIZE)
-            message_display(" - Reverses enemies' keys", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[5], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 400)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[5], (int((DISPLAY_WIDTH / 1.35) - 220),
-                                                                int((DISPLAY_HEIGHT / 8) + 400)), POWERUP_SIZE)
-            message_display(" - Enemies cannot pass walls", self.__gameDisplay.surface, PLAYER_CONTROLS_FONT_SIZE,
-                            color[6], ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 450)))
-            pygame.draw.circle(self.__gameDisplay.surface, color[6], (int((DISPLAY_WIDTH / 1.35) - 220),
-                                                                int((DISPLAY_HEIGHT / 8) + 450)), POWERUP_SIZE)
+            message_display(
+                GAME_ABOUT,
+                self.__gameDisplay.surface,
+                ABOUT_FONT_SIZE,
+                GAME_ABOUT_COLOR,
+                ((DISPLAY_WIDTH / 2), (DISPLAY_HEIGHT / 8)),
+            )
+            message_display(
+                PLAYER_CONTROLS,
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE + 20,
+                AQUA,
+                ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8) + 130)),
+            )
+            message_display(
+                PLAYER0_CONTROLS,
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                RED,
+                ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8) + 200)),
+            )
+            message_display(
+                PLAYER1_CONTROLS,
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                GREEN,
+                ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8) + 250)),
+            )
+            message_display(
+                PLAYER2_CONTROLS,
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                BLUE,
+                ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8) + 300)),
+            )
+            message_display(
+                PLAYER3_CONTROLS,
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                YELLOW,
+                ((DISPLAY_WIDTH / 4.5), ((DISPLAY_HEIGHT / 8) + 350)),
+            )
+            message_display(
+                " - Clears map",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[0],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 150)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[0],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 150)),
+                POWERUP_SIZE,
+            )
+            message_display(
+                " - Speeds up enemies",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[1],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 200)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[1],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 200)),
+                POWERUP_SIZE,
+            )
+            message_display(
+                " - Makes enemies' turn bigger",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[2],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 250)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[2],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 250)),
+                POWERUP_SIZE,
+            )
+            message_display(
+                " - Ghost mode",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[3],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 300)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[3],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 300)),
+                POWERUP_SIZE,
+            )
+            message_display(
+                " - Makes enemies bigger",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[4],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 350)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[4],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 350)),
+                POWERUP_SIZE,
+            )
+            message_display(
+                " - Reverses enemies' keys",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[5],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 400)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[5],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 400)),
+                POWERUP_SIZE,
+            )
+            message_display(
+                " - Enemies cannot pass walls",
+                self.__gameDisplay.surface,
+                PLAYER_CONTROLS_FONT_SIZE,
+                color[6],
+                ((DISPLAY_WIDTH / 1.35), ((DISPLAY_HEIGHT / 8) + 450)),
+            )
+            pygame.draw.circle(
+                self.__gameDisplay.surface,
+                color[6],
+                (int((DISPLAY_WIDTH / 1.35) - 220), int((DISPLAY_HEIGHT / 8) + 450)),
+                POWERUP_SIZE,
+            )
             pygame.display.update()
             self.__gameDisplay.clock.tick(MENU_FPS)
 
@@ -186,10 +362,26 @@ class GameMenu:
                     quit()
             self.__gameDisplay.surface.fill(BLACK)
 
-            number_clicked = not button(NUMBER_OF_PLAYERS, ((DISPLAY_WIDTH / 2) - 150),
-                   (DISPLAY_HEIGHT / 8), 300, 150, GREEN, LIGHT_GREEN, self.__gameDisplay.surface)
-            powerups = not button(GAME_MODE, ((DISPLAY_WIDTH / 2) - 150),
-                   (DISPLAY_HEIGHT / 1.7), 300, 150, BLUE, LIGHT_BLUE, self.__gameDisplay.surface)
+            number_clicked = not button(
+                NUMBER_OF_PLAYERS,
+                ((DISPLAY_WIDTH / 2) - 150),
+                (DISPLAY_HEIGHT / 8),
+                300,
+                150,
+                GREEN,
+                LIGHT_GREEN,
+                self.__gameDisplay.surface,
+            )
+            powerups = not button(
+                GAME_MODE,
+                ((DISPLAY_WIDTH / 2) - 150),
+                (DISPLAY_HEIGHT / 1.7),
+                300,
+                150,
+                BLUE,
+                LIGHT_BLUE,
+                self.__gameDisplay.surface,
+            )
 
             if number_clicked:
                 if self.__settings.get_number() == 4:
@@ -199,10 +391,26 @@ class GameMenu:
             if powerups:
                 self.__settings.set_mode(not self.__settings.get_mode())
 
-            message_display(str(self.__settings.get_number()), self.__gameDisplay.surface, int(NUMBER_FONT_SIZE / 2), GREEN,
-                            ((self.__gameDisplay.WIDTH / 1.3), ((self.__gameDisplay.HEIGHT / 8) + 75)))
-            message_display(str(self.__settings.get_mode()), self.__gameDisplay.surface, int(NUMBER_FONT_SIZE / 2), GREEN,
-                            ((self.__gameDisplay.WIDTH / 1.3), ((self.__gameDisplay.HEIGHT / 1.7) + 75)))
+            message_display(
+                str(self.__settings.get_number()),
+                self.__gameDisplay.surface,
+                int(NUMBER_FONT_SIZE / 2),
+                GREEN,
+                (
+                    (self.__gameDisplay.WIDTH / 1.3),
+                    ((self.__gameDisplay.HEIGHT / 8) + 75),
+                ),
+            )
+            message_display(
+                str(self.__settings.get_mode()),
+                self.__gameDisplay.surface,
+                int(NUMBER_FONT_SIZE / 2),
+                GREEN,
+                (
+                    (self.__gameDisplay.WIDTH / 1.3),
+                    ((self.__gameDisplay.HEIGHT / 1.7) + 75),
+                ),
+            )
 
             pygame.display.update()
             self.__gameDisplay.clock.tick(13)

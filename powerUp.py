@@ -1,7 +1,22 @@
 import asyncio
 import random
 
-from constants import *
+import pygame
+
+from constants import (
+    AQUA,
+    BLACK,
+    BLUE,
+    DEFAULT_SPEED,
+    DISPLAY_HEIGHT,
+    DISPLAY_WIDTH,
+    GREEN,
+    POWERUP_SIZE,
+    RED,
+    VIOLET,
+    WHITE,
+    YELLOW,
+)
 from entity import Entity
 
 color = [BLUE, RED, GREEN, WHITE, YELLOW, VIOLET, AQUA]
@@ -9,8 +24,12 @@ color = [BLUE, RED, GREEN, WHITE, YELLOW, VIOLET, AQUA]
 
 class PowerUp(Entity):
     """Class that handles powerups"""
+
     def __init__(self, surface):
-        self.point = (random.randint(50, (DISPLAY_WIDTH-50)), random.randint(50, (DISPLAY_HEIGHT-50)))
+        self.point = (
+            random.randint(50, (DISPLAY_WIDTH - 50)),
+            random.randint(50, (DISPLAY_HEIGHT - 50)),
+        )
         self.type = random.randint(0, 6)
         self.surface = surface
         self.color = color[self.type]
@@ -116,7 +135,10 @@ class PowerUp(Entity):
     def reset(self):
         """Resets powerup"""
         self.__generate_type_and_color()
-        self.point = (random.randint(50, (DISPLAY_WIDTH - 50)), random.randint(50, (DISPLAY_HEIGHT - 50)))
+        self.point = (
+            random.randint(50, (DISPLAY_WIDTH - 50)),
+            random.randint(50, (DISPLAY_HEIGHT - 50)),
+        )
 
     def draw(self):
         """Draws powerup"""

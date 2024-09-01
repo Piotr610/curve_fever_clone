@@ -1,6 +1,19 @@
 from threading import Thread
 
-from constants import *
+import pygame
+
+from constants import (
+    BLACK,
+    BLUE,
+    FPS,
+    GREEN,
+    PLAYER0_KEYS,
+    PLAYER1_KEYS,
+    PLAYER2_KEYS,
+    PLAYER3_KEYS,
+    RED,
+    YELLOW,
+)
 from player import Player
 from powerUp import PowerUp
 
@@ -9,6 +22,7 @@ stop_threads = False
 
 class Game:
     """Class that handles game"""
+
     def __init__(self, menu, display, fever, settings):
         self.__menu = menu
         self.__display = display

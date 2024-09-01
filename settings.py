@@ -1,5 +1,6 @@
 class Settings:
     """Class that handles settings"""
+
     def __init__(self):
         self.__number_of_players = 2
         self.__game_mode = True
